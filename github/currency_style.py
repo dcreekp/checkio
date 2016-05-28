@@ -68,16 +68,19 @@ def checkio2(text): # FIRST ONE THAT WORKS
 def checkio(text): # MY FAVOURITE
     new_text_lst = []
     for word in text.split(' '):
-        if word[0] == '$' and (',' in word or '.' in word):
-            word = word[::-1].replace('.', '^').replace(',', '^')
-            if word[0] == '^':
+        if word.startswith('$') and (',' in word or '.' in word):
+            word = word[::-1]
+            if word[0] == '.':
+                word = word.replace('.', '*', 1)
+            word = word.replace('.', '^').replace(',', '^')
+            if word[0] == '^' and word[3] == '^':
                 word = word.replace('^', ',', 1)
-                if word[3] == '^':
-                    word = word.replace('^', '.', 1)
-            else:
-                if word[2] == '^':
-                    word = word.replace('^', '.', 1)
-            word = word.replace('^', ',')[::-1]
+                word = word.replace('^', '.', 1)
+            if word[0] == '*' and word[3] == '^':
+                word = word.replace('^', '.', 1)
+            if word[2] == '^':
+                word = word.replace('^', '.', 1)
+            word = word.replace('^', ',').replace('*', '.')[::-1]
         new_text_lst.append(word)
     new_text = ' '.join(new_text_lst)
     return new_text
@@ -95,7 +98,10 @@ def test_checkio():
                    "Us Style = $12,345.67, Euro Style = $12,345.67"
     assert checkio("$1.234, $5.678 and $9") == \
                    "$1,234, $5,678 and $9"
-
+    assert checkio("$4.545,45 is less than $5,454.54.") == \
+                   "$4,545.45 is less than $5,454.54."
+    assert checkio("Clayton Kershaw $31.000.000\nZack Greinke $27.000.000\nAdrian Gonzalez $21.857.143\n") == \
+        "Clayton Kershaw $31,000,000\nZack Greinke $27,000,000\nAdrian Gonzalez $21,857,143\n"
 
 if __name__ == '__main__':
 
