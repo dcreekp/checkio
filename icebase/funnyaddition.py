@@ -27,7 +27,7 @@ checkio = lambda data: data[0] + data[1]
 
 def test():
     assert checkio([5, 5]) == 10, 'First'
-    assert checkio([7, 1]) == 8, 'Second
+    assert checkio([7, 1]) == 8, 'Second'
 
 if __name__ == '__main__':
 
