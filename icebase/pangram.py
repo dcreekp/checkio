@@ -34,12 +34,21 @@ def check_pangram(text):
     text = set(c for c in text.lower() if c not in string.punctuation + ' ')
     return check == text
 
+def check_pangram2(text):
+    import string
 
+    for c in string.ascii_lowercase:
+        if not in text.lower():
+            return False
+    return True
 
 
 def test_check_pangram():
     assert check_pangram("The quick brown fox jumps over the lazy dog."), "brown fox"
     assert not check_pangram("ABCDEF"), "ABC"
     assert check_pangram("Bored? Craving a pub quiz fix? Why, just come to the Royal Oak!"), "Bored?"
+    assert check_pangram2("The quick brown fox jumps over the lazy dog."), "brown fox"
+    assert not check_pangram2("ABCDEF"), "ABC"
+    assert check_pangram2("Bored? Craving a pub quiz fix? Why, just come to the Royal Oak!"), "Bored?"
 
 
